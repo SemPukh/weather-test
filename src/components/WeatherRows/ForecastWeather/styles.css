@@ -1,0 +1,7 @@
+.weekly-weather-info {
+    display: flex;
+}
+
+.daily-weather-info {
+    margin: 0 0.5rem;
+}
