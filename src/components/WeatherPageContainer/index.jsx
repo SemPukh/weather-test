@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import ControlsRow from '../ControlsRow';
 import WeatherRows from '../WeatherRows';
 import { connect } from 'react-redux';
@@ -8,9 +8,20 @@ import './styles.css';
 function WeatherPageContainer({ weather, searchWeather }) {
     const { isLoading } = weather;
 
+    const handleWeatherSearch = useCallback(
+        term => {
+            const searchTerm = term.trim ? term.trim() : term;
+
+            if (searchTerm) {
+                searchWeather(searchTerm);
+            }
+        },
+        [searchWeather]
+    );
+
     return (
         <div className="weather-container">
-            <ControlsRow searchWeather={searchWeather} isLoading={isLoading} />
+            <ControlsRow handleWeatherSearch={handleWeatherSearch} isLoading={isLoading} />
             <WeatherRows {...weather} />
         </div>
     );
