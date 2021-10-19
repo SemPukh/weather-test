@@ -1,41 +1,54 @@
 import React, { useState, useEffect } from 'react';
+import { usePlacesWidget } from 'react-google-autocomplete';
+import { setSearchParam, getCityFromQueryParams } from '../../utils';
 import './styles.css';
+
+const { REACT_APP_GOOGLE_PLACES_API_KEY } = process.env;
 
 function ControlsRow({ searchWeather, isLoading }) {
     const [city, setCity] = useState('');
 
     useEffect(() => {
-        const search = window.location.search || '';
-        if (search) {
-            const searchSplit = search.split('search=');
-            const searchTerm = searchSplit[searchSplit.length - 1];
-            const parsedSearchTerm = decodeURIComponent(searchTerm);
-
-            if (parsedSearchTerm) {
-                setCity(parsedSearchTerm.trim());
-                handleWeatherSearch(parsedSearchTerm);
-            }
+        const address = getCityFromQueryParams();
+        if (address) {
+            handleWeatherSearch(address);
+            setCity(address);
         }
     }, []);
+
+    const handleSelectPlace = place => {
+        const { formatted_address } = place;
+        if (!formatted_address) return;
+
+        handleWeatherSearch(formatted_address);
+        setSearchParam(formatted_address);
+    };
+
+    const { ref } = usePlacesWidget({
+        apiKey: REACT_APP_GOOGLE_PLACES_API_KEY,
+        onPlaceSelected: handleSelectPlace,
+        defaultValue: getCityFromQueryParams()
+    });
 
     const handleChange = e => {
         const { value } = e.target;
         setCity(value);
-
-        const nextUrl = window.location.pathname + '?search=' + encodeURIComponent(value.trim());
-        window.history.pushState(null, '', nextUrl);
+        setSearchParam(value.trim());
     };
 
     const handleWeatherSearch = (term = city) => {
         const searchTerm = term.trim();
+
         if (searchTerm) {
             searchWeather(searchTerm);
         }
     };
 
     const handleKeyDown = e => {
+        console.log('val: ', e.target.value);
         if (e.key === 'Enter') {
-            handleWeatherSearch();
+            handleWeatherSearch(e.target.value);
+            handleChange(e);
         }
     };
 
@@ -49,8 +62,10 @@ function ControlsRow({ searchWeather, isLoading }) {
                     value={city}
                     onKeyDown={handleKeyDown}
                     onChange={handleChange}
+                    ref={ref}
                 />
-                <button className="search-button" disabled={isLoading} onClick={() => handleWeatherSearch}>
+
+                <button className="search-button" disabled={isLoading} onClick={() => handleWeatherSearch()}>
                     Get weather
                 </button>
             </div>
