@@ -21,9 +21,9 @@ function CurrentWeather({ weather, city }) {
         <div className="weather-info-container">
             <div>
                 <div>City: {city}</div>
-                <div>Temperature: {temperature}</div>
-                <div>Feels like: {temperatureFeelsLike}</div>
-                <div>Humidity: {humidity}</div>
+                <div>Temperature: {temperature}&deg;</div>
+                <div>Feels like: {temperatureFeelsLike}&deg;</div>
+                <div>Humidity: {humidity}%</div>
             </div>
             <img src={iconUrl} alt="" />
         </div>

@@ -20,14 +20,19 @@ function ForecastWeather({ weather }) {
 
                 const iconUrl = 'http://openweathermap.org/img/w/' + icon + '.png';
 
+                const date = new Date(dt * 1000).toGMTString();
+                const dayOfWeek = date.slice(0, 3);
+                const day = date.slice(5, 11);
+
                 return (
                     <div className="daily-weather-info" key={index}>
-                        <div>Date: {new Date(dt * 1000).toLocaleDateString()}</div>
+                        <div>{dayOfWeek}</div>
+                        <div>{day}</div>
                         <img src={iconUrl} alt="" />
                         <div>
-                            Temperature: {minTemp}/{maxTemp}
+                            {minTemp}&deg; ... {maxTemp}&deg;
                         </div>
-                        <div>Humidity: {humidity}</div>
+                        <div>Humidity: {humidity}%</div>
                     </div>
                 );
             })}

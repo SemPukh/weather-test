@@ -6,9 +6,11 @@ import { searchWeather } from '../../actions/weatherActions';
 import './styles.css';
 
 function WeatherPageContainer({ weather, searchWeather }) {
+    const { isLoading } = weather;
+
     return (
         <div className="weather-container">
-            <ControlsRow searchWeather={searchWeather} />
+            <ControlsRow searchWeather={searchWeather} isLoading={isLoading} />
             <WeatherRows {...weather} />
         </div>
     );
