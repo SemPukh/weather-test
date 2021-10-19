@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatTemperature } from '../../../utils';
 import './styles.css';
 
 function ForecastWeather({ weather }) {
@@ -15,8 +16,8 @@ function ForecastWeather({ weather }) {
                     },
                     dt
                 } = weather;
-                const minTemp = (temp.min - 273 > 0 ? '+' : '') + (temp.min - 273).toFixed(2);
-                const maxTemp = (temp.max - 273 > 0 ? '+' : '') + (temp.max - 273).toFixed(2);
+                const minTemp = formatTemperature(temp.min);
+                const maxTemp = formatTemperature(temp.max);
 
                 const iconUrl = 'http://openweathermap.org/img/w/' + icon + '.png';
 

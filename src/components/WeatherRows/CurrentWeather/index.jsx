@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatTemperature } from '../../../utils';
 import './styles.css';
 
 function CurrentWeather({ weather, city }) {
@@ -14,8 +15,8 @@ function CurrentWeather({ weather, city }) {
 
     const iconUrl = 'http://openweathermap.org/img/w/' + icon + '.png';
 
-    const temperature = (temp - 273 > 0 ? '+' : '') + (temp - 273).toFixed(2);
-    const temperatureFeelsLike = (feels_like - 273 > 0 ? '+' : '') + (feels_like - 273).toFixed(2);
+    const temperature = formatTemperature(temp)
+    const temperatureFeelsLike = formatTemperature(feels_like)
 
     return (
         <div className="weather-info-container">
