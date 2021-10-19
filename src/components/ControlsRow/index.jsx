@@ -1,16 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.css';
 
 function ControlsRow({ searchWeather, isLoading }) {
     const [city, setCity] = useState('');
 
+    useEffect(() => {
+        const search = window.location.search || '';
+        if (search) {
+            const searchSplit = search.split('search=');
+            const searchTerm = searchSplit[searchSplit.length - 1];
+            const parsedSearchTerm = decodeURIComponent(searchTerm);
+
+            if (parsedSearchTerm) {
+                setCity(parsedSearchTerm.trim());
+                handleWeatherSearch(parsedSearchTerm);
+            }
+        }
+    }, []);
+
     const handleChange = e => {
         const { value } = e.target;
         setCity(value);
+
+        const nextUrl = window.location.pathname + '?search=' + encodeURIComponent(value.trim());
+        window.history.pushState(null, '', nextUrl);
     };
 
-    const handleWeatherSearch = () => {
-        const searchTerm = city.trim();
+    const handleWeatherSearch = (term = city) => {
+        const searchTerm = term.trim();
         if (searchTerm) {
             searchWeather(searchTerm);
         }
@@ -33,7 +50,7 @@ function ControlsRow({ searchWeather, isLoading }) {
                     onKeyDown={handleKeyDown}
                     onChange={handleChange}
                 />
-                <button className="search-button" disabled={isLoading} onClick={handleWeatherSearch}>
+                <button className="search-button" disabled={isLoading} onClick={() => handleWeatherSearch}>
                     Get weather
                 </button>
             </div>
