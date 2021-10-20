@@ -18,7 +18,6 @@ function ForecastWeather({ weather }) {
                 } = weather;
                 const minTemp = formatTemperature(temp.min);
                 const maxTemp = formatTemperature(temp.max);
-
                 const iconUrl = 'https://openweathermap.org/img/w/' + icon + '.png';
 
                 const date = new Date(dt * 1000).toGMTString();

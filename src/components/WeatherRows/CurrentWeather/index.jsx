@@ -14,7 +14,6 @@ function CurrentWeather({ weather, city }) {
     } = current;
 
     const iconUrl = 'https://openweathermap.org/img/w/' + icon + '.png';
-
     const temperature = formatTemperature(temp)
     const temperatureFeelsLike = formatTemperature(feels_like)
 
