@@ -4,6 +4,7 @@ import { setSearchParam, getCityFromQueryParams } from '../../utils';
 import './styles.css';
 
 const { REACT_APP_GOOGLE_PLACES_API_KEY } = process.env;
+const DEFAULT_CITY = 'Moscow';
 
 function ControlsRow({ handleWeatherSearch, isLoading }) {
     const [city, setCity] = useState('');
@@ -20,10 +21,12 @@ function ControlsRow({ handleWeatherSearch, isLoading }) {
             function onSuccess(position) {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
-                handleWeatherSearch({ lat, lon });
+                new Promise(resolve => resolve(handleWeatherSearch({ lat, lon }))).then(info => setCity(info.current.city.name));
             }
             function onError(error) {
                 console.error(error);
+                setCity(DEFAULT_CITY);
+                handleWeatherSearch(DEFAULT_CITY);
             }
         }
     }, [handleWeatherSearch]);

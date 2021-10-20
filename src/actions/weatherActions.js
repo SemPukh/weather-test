@@ -14,7 +14,9 @@ export const searchWeather = searchTerm => async dispatch => {
         }
         const { coord } = current.city;
         const forecast = await fetchWeatherForecast(coord).then(data => data.json());
-        dispatch({ type: GET_WEATHER_SUCCESS, payload: { current, forecast } });
+        const payload = { current, forecast };
+        dispatch({ type: GET_WEATHER_SUCCESS, payload });
+        return payload;
     } catch (error) {
         dispatch({ type: GET_WEATHER_ERROR, payload: error });
         console.error(error);

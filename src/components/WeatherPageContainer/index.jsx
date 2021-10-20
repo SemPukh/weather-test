@@ -9,11 +9,11 @@ function WeatherPageContainer({ weather, searchWeather }) {
     const { isLoading } = weather;
 
     const handleWeatherSearch = useCallback(
-        term => {
+        async term => {
             const searchTerm = term.trim ? term.trim() : term;
 
             if (searchTerm) {
-                searchWeather(searchTerm);
+                return await searchWeather(searchTerm);
             }
         },
         [searchWeather]
