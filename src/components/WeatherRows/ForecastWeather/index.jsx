@@ -19,7 +19,7 @@ function ForecastWeather({ weather }) {
                 const minTemp = formatTemperature(temp.min);
                 const maxTemp = formatTemperature(temp.max);
 
-                const iconUrl = 'http://openweathermap.org/img/w/' + icon + '.png';
+                const iconUrl = 'https://openweathermap.org/img/w/' + icon + '.png';
 
                 const date = new Date(dt * 1000).toGMTString();
                 const dayOfWeek = date.slice(0, 3);

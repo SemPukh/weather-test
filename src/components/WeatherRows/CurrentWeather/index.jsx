@@ -13,7 +13,7 @@ function CurrentWeather({ weather, city }) {
         }
     } = current;
 
-    const iconUrl = 'http://openweathermap.org/img/w/' + icon + '.png';
+    const iconUrl = 'https://openweathermap.org/img/w/' + icon + '.png';
 
     const temperature = formatTemperature(temp)
     const temperatureFeelsLike = formatTemperature(feels_like)
